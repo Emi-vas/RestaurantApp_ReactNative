@@ -1,11 +1,25 @@
+//react
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
+import Categories from './src/components/Categories';
+//compo
+import Header from './src/components/Header';
+import Search from './src/components/Search';
+
 
 export default function App() {
+  const [categorieSelected, setCategorieSelected] = useState("")
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+        <Header />
+        <Search />
+        <Categories categorieSelected={categorieSelected} setCategorieSelected={setCategorieSelected} />
+        <Text style={{fontSize: "33", margin: 33}}>
+            {categorieSelected}
+        </Text>
+        <StatusBar />
     </View>
   );
 }
@@ -13,8 +27,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: 'white',
   },
 });

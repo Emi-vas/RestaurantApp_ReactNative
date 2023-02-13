@@ -1,7 +1,7 @@
 //react
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View} from 'react-native';
 import Categories from './src/components/Categories';
 //compo
 import Header from './src/components/Header';
@@ -10,14 +10,18 @@ import Search from './src/components/Search';
 
 export default function App() {
   const [categorieSelected, setCategorieSelected] = useState("")
+  const [search, setSearch] = useState('')
 
   return (
     <View style={styles.container}>
         <Header />
-        <Search />
+        <Search search={search} setSearch={setSearch} />
         <Categories categorieSelected={categorieSelected} setCategorieSelected={setCategorieSelected} />
         <Text style={{fontSize: "33", margin: 33}}>
             {categorieSelected}
+        </Text>
+        <Text style={{fontSize: "20", margin: 33}}>
+            {search}
         </Text>
         <StatusBar />
     </View>

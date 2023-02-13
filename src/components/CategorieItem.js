@@ -26,7 +26,7 @@ export default CategorieItem
 
 const styles = StyleSheet.create({
     container: {
-        width: 110,
+        width: 100,
         height: 110,
         borderRadius: 50,
         marginVertical: 5,
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         padding: 10,
         borderRadius: '50%',
-        marginBottom: 5
+        marginBottom: 3
     },
     image: {
         width: 50,

@@ -21,6 +21,11 @@ const Search = ({ search, setSearch }) => {
         return () => clearTimeout(timer)
     }, [tempSearch])
 
+    useEffect(() => {
+        //when a user presses categorieItem, it replaces the search
+        if(search != tempSearch) setTempSearch(search)
+    }, [search])
+
     const handleChange = (inputValue) => {
         setTempSearch(inputValue)
     }

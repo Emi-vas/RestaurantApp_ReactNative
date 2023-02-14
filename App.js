@@ -21,11 +21,11 @@ export default function App() {
   useEffect(() => {
     if(search == "") return
 
-    fetch(`${API_URL}complexSearch?query=${search}&apiKey=${API_KEY}`)
+    /* fetch(`${API_URL}complexSearch?query=${search}&apiKey=${API_KEY}`)
       .then(response => response.json())
       .then(data => {
         setData(data.results)
-      })
+      }) */
 
   }, [search])
 

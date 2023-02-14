@@ -1,12 +1,19 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Button } from "react-native";
 
 const RecipeCard = ({ item }) => {
     const id = item.id
     console.log(item.image)
     return (
         <View style={styles.container}>
-            <Image source={{uri: item.image}} style={styles.image} />
-            <Text style={styles.text}>{item.title}</Text>
+            <View style={styles.imageBloc}>
+                <Image source={{uri: item.image}} style={styles.image} />
+            </View>
+            <View style={styles.textBloc}>
+                <Text style={styles.text}>{item.title}</Text>
+                <Button 
+                    title="View recipe"
+                />
+            </View>
         </View>
     );
 };
@@ -20,21 +27,24 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 20,
         borderRadius: 40,
-        position: 'relative',
+        flexDirection: "row",
         justifyContent: "center",
         alignItems: "center"
     },
+    imageBloc : {
+        width: "50%"
+    },
     image: {
-        width: 370,
-        height: 300,
+        width: "100%",
+        height: 200,
         resizeMode: "cover",
     },
+    textBloc: {
+        width: "50%"
+    },
     text: {
-        position: "absolute",
         textAlign: "center",
         fontSize: 20,
-        color: "white",
-        backgroundColor: "rgba(0, 0, 0, 0.43)",
         padding: 7,
     }
 })

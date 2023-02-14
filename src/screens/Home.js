@@ -44,7 +44,6 @@ export default function Home() {
               showsVerticalScrollIndicator={false}
           />
         </View>
-        <StatusBar />
     </View>
   );
 }
@@ -57,5 +56,6 @@ const styles = StyleSheet.create({
   liste: {
     alignItems: "center",
     flex: 0.96,
+    backgroundColor: " rgb(234, 216, 203)"
   }
 });

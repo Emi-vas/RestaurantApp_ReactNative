@@ -26,8 +26,9 @@ export default CategorieItem
 
 const styles = StyleSheet.create({
     container: {
-        width: 100,
-        height: 110,
+        flexDirection: "row",
+        width: 120,
+        height: 50,
         borderRadius: 50,
         marginVertical: 5,
         marginHorizontal: 10,
@@ -35,17 +36,16 @@ const styles = StyleSheet.create({
         //backgroundColor: "rgb(241,186,37)",
 
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "space-around"
     },
     imageBloc: {
         backgroundColor: 'white',
-        padding: 10,
+        padding: 5,
         borderRadius: '50%',
-        marginBottom: 3
     },
     image: {
-        width: 50,
-        height: 50,
+        width: 40,
+        height: 40,
     },
     active: {
         backgroundColor: "rgb(241,186,37)"

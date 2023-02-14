@@ -4,8 +4,10 @@ import {Text, View, StyleSheet} from "react-native"
 const Header = () => {
     return (
         <View style={styles.container}>
-            <Text style={styles.text} >Grab your</Text>
-            <Text style={{...styles.text, ...styles.big}}>delicious meal !</Text>
+            <Text style={styles.text} >Anyone can 
+                <Text style={{...styles.text, ...styles.big}}> Cook !</Text>
+            
+            </Text>
         </View>
     )
 }

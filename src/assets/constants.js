@@ -24,3 +24,5 @@ export const commonCategories = [
       imgUrl: require('./images/steak.png')
     }
 ]
+
+

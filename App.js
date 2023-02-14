@@ -1,61 +1,45 @@
+
 //react
-import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, FlatList} from 'react-native';
+import 'react-native-gesture-handler';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+
 //compo
-import Categories from './src/components/Categories';
-import Header from './src/components/Header';
-import Search from './src/components/Search';
-import RecipeCard from './src/components/RecipeCard';
-//env
-import { API_URL, API_KEY } from "@env"
+import Home from './src/screens/Home';
+import RecipeDetail from './src/screens/RecipeDetail';
 
-//---temp
-import { dataTemp } from './src/assets/data';
+const Stack = createStackNavigator();
 
-
-export default function App() {
-  const [search, setSearch] = useState('')
-  const [data, setData] = useState(dataTemp)
-
-  useEffect(() => {
-    if(search == "") return
-
-    /* fetch(`${API_URL}complexSearch?query=${search}&apiKey=${API_KEY}`)
-      .then(response => response.json())
-      .then(data => {
-        setData(data.results)
-      }) */
-
-  }, [search])
-
-  return (
-    <View style={styles.container}>
-        <Header />
-        <Search search={search} setSearch={setSearch} />
-        <Categories categorieSelected={search} setCategorieSelected={setSearch} />
-        <View style={styles.liste}>
-          <FlatList 
-              data={data}
-              renderItem={({item}) => (
-                  <RecipeCard item={item} />
-              )}
-              keyExtractor={(item) => item.id}
-              showsVerticalScrollIndicator={false}
-          />
-        </View>
-        <StatusBar />
-    </View>
-  );
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: "transparent"
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  liste: {
-    alignItems: "center",
-    flex: 0.96,
-  }
-});
+export default function App() {
+  return (
+    <NavigationContainer theme={theme}>
+        <Stack.Navigator
+          initialRouteName="Home"
+          screenOptions={{
+            headerMode: 'screen',
+            headerTintColor: 'white',
+            headerStyle: { display: 'tomato' },
+            headerShown: false
+          }}
+          
+        >
+          <Stack.Screen
+            name="Home"
+            component={Home}
+          />
+          <Stack.Screen
+            name="RecipeDetail"
+            component={RecipeDetail}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+  );
+}

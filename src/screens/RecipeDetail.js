@@ -1,6 +1,6 @@
 //react
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, StatusBar } from "react-native";
+import { View, Text, StyleSheet, Image, StatusBar, ScrollView, Pressable } from "react-native";
 //data
 import { dataTempRecipe } from "../assets/data"; //temp
 //icons
@@ -11,15 +11,19 @@ import { API_URL, API_KEY } from "@env"
 
 const RecipeDetail = ({ route }) => {
     const { id } = route.params //id of recipe
-    const [data, setData] = useState(null)
+    const [data, setData] = useState(dataTempRecipe)
     const [instructions, setInstructions] = useState('')
+    const [instructionsCut, setInstructionsCut] = useState({
+        display: false,
+        body: ""
+    })
 
     useEffect(()=>{
-        fetch(`${API_URL}${id}/information?apiKey=${API_KEY}`)
+        /* fetch(`${API_URL}${id}/information?apiKey=${API_KEY}`)
         .then(response => response.json())
         .then(data => {
           setData(data)
-        }) 
+        })  */
     },[])
 
     useEffect(() => {
@@ -31,6 +35,15 @@ const RecipeDetail = ({ route }) => {
         }
     }, [data])
 
+    useEffect(() => {
+        if(instructions.length > 400) {
+            setInstructionsCut({
+                display: true,
+                body: instructions.slice(0, 400)
+            })
+        }
+    },[instructions])
+
     return (
         <View>
             {
@@ -41,29 +54,40 @@ const RecipeDetail = ({ route }) => {
                         style={styles.imageMain}
                     />
                     <Text style={styles.title}>{data.title}</Text>
-                    
-                    <View>
-                        <Text style={styles.subTitle}>Instructions : </Text>
-                        <Text style={styles.p}>{instructions}</Text>
-                    </View>
 
-                    <View style={styles.blocScore}>
-                        <View style={styles.scoreItem}>
-                            <FontAwesome5 name="heartbeat" size={50} color="white" />
-                            <Text style={styles.scoreTxt}>Health Score : </Text>
-                            <Text style={styles.scoreTxtValue}>{data.healthScore}</Text>
+                    <ScrollView style={styles.scrollView}>
+                        <View>
+                            <Text style={styles.subTitle}>Instructions : </Text>
+                            {
+                                instructionsCut.display ?
+                                <Pressable onPress={()=> setInstructionsCut({...instructionsCut, display: false})}>
+                                    <Text style={styles.p}>{instructionsCut.body} 
+                                        [...]
+                                    </Text>
+                                </Pressable>
+                                :
+                                <Text style={styles.p}>{instructions}</Text>
+                            }
                         </View>
-                        <View style={styles.scoreItem}>
-                            <Ionicons name="ios-timer" size={50} color="white" />
-                            <Text style={styles.scoreTxt}>Time : </Text>
-                            <Text style={styles.scoreTxtValue}>{data.readyInMinutes} min</Text>
+
+                        <View style={styles.blocScore}>
+                            <View style={styles.scoreItem}>
+                                <FontAwesome5 name="heartbeat" size={50} color="white" />
+                                <Text style={styles.scoreTxt}>Health Score : </Text>
+                                <Text style={styles.scoreTxtValue}>{data.healthScore}</Text>
+                            </View>
+                            <View style={styles.scoreItem}>
+                                <Ionicons name="ios-timer" size={50} color="white" />
+                                <Text style={styles.scoreTxt}>Time : </Text>
+                                <Text style={styles.scoreTxtValue}>{data.readyInMinutes} min</Text>
+                            </View>
+                            <View style={styles.scoreItem}>
+                                <Ionicons name="ios-cart" size={50} color="white" />
+                                <Text style={styles.scoreTxt}>Price :</Text>
+                                <Text style={styles.scoreTxtValue}>${data.pricePerServing}</Text>
+                            </View>
                         </View>
-                        <View style={styles.scoreItem}>
-                            <Ionicons name="ios-cart" size={50} color="white" />
-                            <Text style={styles.scoreTxt}>Price :</Text>
-                            <Text style={styles.scoreTxtValue}>${data.pricePerServing}</Text>
-                        </View>
-                    </View>
+                    </ScrollView>
                 </View>
             }
             <StatusBar />
@@ -78,6 +102,8 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        backgroundColor: "white",
+        minHeight: "100%"
     },
     imageMain: {
         width: "130%",
@@ -101,6 +127,10 @@ const styles = StyleSheet.create({
         padding: 15,
         textAlign: "justify",
         fontSize: 14.5
+    },
+    scrollView: {
+        marginBottom: 10,
+        flex: 0.4,
     },
 
     //info

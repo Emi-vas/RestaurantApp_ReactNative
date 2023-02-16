@@ -1,6 +1,7 @@
 //react
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, StatusBar, ScrollView, Pressable } from "react-native";
+import { View, Text, StyleSheet, Image, StatusBar, ScrollView, Pressable, SafeArea, SafeAreaView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 //data
 import { dataTempRecipe } from "../assets/data"; //temp
 //icons
@@ -12,8 +13,9 @@ import { API_URL, API_KEY } from "@env"
 import Loader from "../components/Loader";
 
 const RecipeDetail = ({ route }) => {
+    const navigation = useNavigation()
     const { id } = route.params //id of recipe
-    const [data, setData] = useState(null)
+    const [data, setData] = useState(dataTempRecipe)
     const [instructions, setInstructions] = useState('')
     const [instructionsCut, setInstructionsCut] = useState({
         display: false,
@@ -49,7 +51,10 @@ const RecipeDetail = ({ route }) => {
     if(!data) return <Loader />
 
     return (
-        <View>
+        <SafeAreaView>
+            <Pressable style={styles.back} onPress={()=>navigation.navigate('Home')}>
+                <Ionicons name="arrow-back-sharp" size={30} color="rgb(193, 89, 19)" />
+            </Pressable>
             {
                 data &&
                 <View style={styles.container}>
@@ -95,7 +100,7 @@ const RecipeDetail = ({ route }) => {
                 </View>
             }
             <StatusBar />
-        </View>
+        </SafeAreaView>
     );
 };
 
@@ -108,6 +113,15 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "white",
         minHeight: "100%"
+    },
+    back: {
+        position: "absolute",
+        top: 70,
+        left: 10,
+        zIndex: 7,
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        borderRadius: "50%",
+        padding: 3
     },
     imageMain: {
         width: "130%",
@@ -134,7 +148,7 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         marginBottom: 10,
-        flex: 0.4,
+        flex: 0.9,
     },
 
     //info
@@ -142,7 +156,8 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
-        flexWrap: "wrap"
+        flexWrap: "wrap",
+        paddingBottom: 70
     },
     scoreItem : {
         display: "flex",

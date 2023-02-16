@@ -8,10 +8,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 //env
 import { API_URL, API_KEY } from "@env"
+//compo
+import Loader from "../components/Loader";
 
 const RecipeDetail = ({ route }) => {
     const { id } = route.params //id of recipe
-    const [data, setData] = useState(dataTempRecipe)
+    const [data, setData] = useState(null)
     const [instructions, setInstructions] = useState('')
     const [instructionsCut, setInstructionsCut] = useState({
         display: false,
@@ -19,11 +21,11 @@ const RecipeDetail = ({ route }) => {
     })
 
     useEffect(()=>{
-        /* fetch(`${API_URL}${id}/information?apiKey=${API_KEY}`)
+        fetch(`${API_URL}${id}/information?apiKey=${API_KEY}`)
         .then(response => response.json())
         .then(data => {
           setData(data)
-        })  */
+        }) 
     },[])
 
     useEffect(() => {
@@ -43,6 +45,8 @@ const RecipeDetail = ({ route }) => {
             })
         }
     },[instructions])
+
+    if(!data) return <Loader />
 
     return (
         <View>
